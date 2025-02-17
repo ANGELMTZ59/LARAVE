@@ -38,8 +38,40 @@
                     <th class="border p-2">Acciones</th>
                 </tr>
             </thead>
-            
+            <tbody id="alumnosTable">
+                @foreach ($alumnos as $alumno)
+                <tr class="border text-center fila-alumno 
+                    {{ $alumno->cuatrimestre < 7 ? 'bg-yellow-200' : '' }}">
+                    <td class="border p-2">{{ $alumno->matricula }}</td>
+                    <td class="border p-2">{{ $alumno->nombre }}</td>
+                    <td class="border p-2">{{ $alumno->apellidoP }}</td>
+                    <td class="border p-2">{{ $alumno->apellidoM }}</td>
+                    <td class="border p-2">{{ $alumno->fecha_nacimiento }}</td>
+                    <td class="border p-2">{{ $alumno->carrera }}</td>
+                    <td class="border p-2">{{ $alumno->cuatrimestre }}</td>
+                    <td class="border p-2">
+                        <a href="#" class="bg-blue-500 text-white px-4 py-1 rounded">Perfil Alumno</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.fila-alumno');
+
+            rows.forEach(row => {
+                let matricula = row.cells[0].textContent.toLowerCase();
+                if (matricula.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
